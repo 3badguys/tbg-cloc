@@ -16,6 +16,27 @@
 ;;; Code:
 
 
+;;;###autoload
+(defun tbg-cloc-file (@input_file)
+  "Cloc for specific file."
+  (interactive)
+  (with-temp-buffer
+    (insert-file-contents @input_file)
+    ;; remove empty lines
+    (beginning-of-buffer)
+    (while (re-search-forward "\n\n+" nil "NOERROR")
+      (replace-match "\n"))
+    (message "Lines of %s: %d" @input_file (count-lines (point-min) (point-max)))))
+;;; Test case:
+;; (tbg-cloc-file "~/.emacs.d/init.el")
 
+;;;###autoload
+(defun tbg-cloc-directory (@input_dir)
+  "Cloc for specific directory."
+  (interactive)
+  (mapc 'tbg-cloc-file
+        (directory-files-recursively @input_dir "\.el$" nil)))
+;;; Test case:
+;; (tbg-cloc-directory "~/.emacs.d/")
 
 ;;; tbg-cloc.el ends here
