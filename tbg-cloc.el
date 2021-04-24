@@ -39,4 +39,6 @@
 ;;; Test case:
 ;; (tbg-cloc-directory "~/.emacs.d/")
 
+(provide 'tbg-cloc)
+
 ;;; tbg-cloc.el ends here
